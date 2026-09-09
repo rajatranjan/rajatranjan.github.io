@@ -1,12 +1,395 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Rajat</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rajat Ranjan — study tools, built in Varanasi</title>
+<meta name="description" content="Independent developer in Varanasi building Pacer, a study planner for NEET aspirants.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDEEE8;
+    --paper-2:#E3E5DC;
+    --ink:#17242C;
+    --graphite:#6E7780;
+    --mark:#B93B26;
+    --rule:#C9CCC2;
+    --measure:64ch;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Source Serif 4",Georgia,serif;
+    font-size:clamp(16px,1rem + 0.2vw,18px);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{max-width:1120px;margin:0 auto;padding:0 clamp(20px,5vw,56px)}
+
+  /* ---------- masthead ---------- */
+  .masthead{
+    display:flex;align-items:baseline;justify-content:space-between;
+    gap:24px;flex-wrap:wrap;
+    padding:28px 0 20px;
+    border-bottom:1px solid var(--rule);
+  }
+  .wordmark{
+    font-family:"Bricolage Grotesque",system-ui,sans-serif;
+    font-weight:800;font-size:1.05rem;letter-spacing:-0.02em;margin:0;
+  }
+  .masthead nav{display:flex;gap:22px;font-size:0.9rem}
+  a{color:inherit}
+  .masthead a,.foot a{text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:1px}
+  .masthead a:hover,.foot a:hover{border-bottom-color:var(--ink)}
+
+  /* ---------- hero ---------- */
+  .hero{
+    display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr);
+    gap:clamp(32px,5vw,72px);align-items:start;
+    padding:clamp(48px,8vw,96px) 0 clamp(40px,6vw,72px);
+  }
+  h1{
+    font-family:"Bricolage Grotesque",system-ui,sans-serif;
+    font-weight:800;
+    font-size:clamp(2.6rem,7.5vw,4.6rem);
+    line-height:0.98;letter-spacing:-0.035em;
+    margin:0 0 28px;
+    text-wrap:balance;
+  }
+  .lede{max-width:44ch;margin:0 0 20px;font-size:1.12em}
+  .hero p{max-width:46ch}
+  .quiet{color:var(--graphite)}
+
+  /* ---------- the sheet ---------- */
+  .sheet{
+    background:var(--paper-2);
+    border:1px solid var(--rule);
+    padding:20px 20px 16px;
+  }
+  .sheet-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    gap:12px;margin-bottom:16px;
+  }
+  .count{
+    font-family:"Bricolage Grotesque",system-ui,sans-serif;
+    font-weight:800;font-size:2.1rem;line-height:1;letter-spacing:-0.03em;
+    font-variant-numeric:tabular-nums;
+  }
+  .sheet-head span{font-size:0.85rem;color:var(--graphite);text-align:right;max-width:18ch}
+  .grid{display:flex;flex-wrap:wrap;gap:5px}
+  .bub{
+    width:9px;height:9px;border-radius:50%;
+    border:1.2px solid var(--graphite);
+    background:transparent;padding:0;cursor:default;
+    transition:background-color .12s ease,border-color .12s ease,transform .12s ease;
+  }
+  .bub:hover,.bub:focus-visible{background:var(--ink);border-color:var(--ink);transform:scale(1.5)}
+  .bub.today{background:var(--mark);border-color:var(--mark)}
+  .bub.month{border-color:var(--ink)}
+  .readout{
+    margin-top:14px;padding-top:10px;border-top:1px solid var(--rule);
+    font-size:0.85rem;color:var(--graphite);min-height:1.6em;
+    font-variant-numeric:tabular-nums;
+  }
+
+  /* ---------- work ---------- */
+  .rule-head{
+    font-family:"Bricolage Grotesque",system-ui,sans-serif;
+    font-weight:600;font-size:0.95rem;letter-spacing:-0.01em;
+    margin:0;padding-bottom:10px;border-bottom:1px solid var(--rule);
+  }
+  .work{padding:clamp(32px,5vw,56px) 0}
+  .item{
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.9fr);
+    gap:clamp(16px,4vw,56px);
+    padding:30px 0;border-bottom:1px solid var(--rule);
+  }
+  .item h3{
+    font-family:"Bricolage Grotesque",system-ui,sans-serif;
+    font-weight:600;font-size:1.35rem;letter-spacing:-0.02em;
+    margin:0 0 4px;
+  }
+  .item .meta{font-size:0.85rem;color:var(--graphite);margin:0}
+  .item p:not(.meta){margin:0 0 12px;max-width:58ch}
+  .item p:last-child{margin-bottom:0}
+
+  /* ---------- close ---------- */
+  .close{padding:clamp(40px,6vw,80px) 0 24px;max-width:var(--measure)}
+  .close h2{
+    font-family:"Bricolage Grotesque",system-ui,sans-serif;
+    font-weight:800;font-size:clamp(1.7rem,4vw,2.4rem);
+    letter-spacing:-0.03em;line-height:1.08;margin:0 0 18px;
+  }
+  .close a{font-weight:600}
+  .foot{
+    display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+    padding:22px 0 44px;border-top:1px solid var(--rule);
+    font-size:0.85rem;color:var(--graphite);
+  }
+
+  /* ---------- scroll: a pencil marking its way down the sheet ---------- */
+  .progress{
+    position:fixed;top:0;left:0;right:0;height:2px;
+    background:transparent;z-index:20;pointer-events:none;
+  }
+  .progress i{
+    display:block;height:100%;width:0;
+    background:var(--graphite);
+    transform-origin:left;
+  }
+
+  .item{
+    opacity:.34;
+    transform:translateY(10px);
+    transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.3,1);
+  }
+  .item.marked{opacity:1;transform:none}
+
+  .item > div:first-child{position:relative}
+  .mark-bub{
+    position:absolute;left:-26px;top:.55em;
+    width:11px;height:11px;border-radius:50%;
+    border:1.4px solid var(--graphite);
+    background:transparent;
+    transition:background-color .45s ease .18s,border-color .45s ease .18s;
+  }
+  .item.marked .mark-bub{background:var(--mark);border-color:var(--mark)}
+
+  /* the closing line inks in the same way */
+  .close{opacity:.34;transition:opacity .6s ease}
+  .close.marked{opacity:1}
+
+  /* the sheet draws itself in on load */
+  @keyframes bubIn{
+    from{opacity:0;transform:scale(.2)}
+    to{opacity:1;transform:none}
+  }
+
+  /* graphite dust: bubbles darken as the cursor passes over them */
+  .bub.near{border-color:var(--ink)}
+
+  ::selection{background:#F2E58C;color:var(--ink)}
+
+  :focus-visible{outline:2px solid var(--mark);outline-offset:3px}
+
+  @media (max-width:820px){
+    .hero{grid-template-columns:1fr;padding-top:40px}
+    .item{grid-template-columns:1fr;gap:10px}
+    .bub{width:8px;height:8px}
+    .mark-bub{left:auto;right:0;top:.6em}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important}
+    .item,.close{opacity:1;transform:none}
+    .item .mark-bub{background:var(--mark);border-color:var(--mark)}
+    .progress{display:none}
+  }
+</style>
 </head>
 <body>
-  <h1>Hello</h1>
-  <p>It works.</p>
+
+<div class="progress" aria-hidden="true"><i id="pencil"></i></div>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="wordmark">Rajat Ranjan</p>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="https://github.com/rajatranjan">GitHub</a>
+      <a href="mailto:you@example.com">Email</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>I build the boring software that makes hard studying possible.</h1>
+      <p class="lede">Independent developer in Varanasi. Most of my time goes into Pacer, a planner for students preparing for NEET — the part of the exam nobody sells you a course for.</p>
+      <p class="quiet">React Native and Expo, SQLite underneath, everything working offline first. I write specs before code and I test the scheduling logic like it owes me money.</p>
+    </div>
+
+    <div class="sheet" id="sheet">
+      <div class="sheet-head">
+        <span class="count" id="count">—</span>
+        <span id="caption">days until NEET 2027</span>
+      </div>
+      <div class="grid" id="grid" role="img" aria-label="One bubble for each day remaining until the NEET 2027 exam."></div>
+      <p class="readout" id="readout">Point at a day.</p>
+    </div>
+  </section>
+
+  <section class="work" id="work">
+    <h2 class="rule-head">Work</h2>
+
+    <article class="item">
+      <div>
+        <span class="mark-bub" aria-hidden="true"></span>
+        <h3>Pacer</h3>
+        <p class="meta">React Native, Expo, Drizzle + SQLite</p>
+      </div>
+      <div>
+        <p>A study planner for NEET aspirants. You give it your syllabus and your exam date; it gives you today. The hard part isn't the calendar — it's what happens when a student falls three days behind and needs the plan to bend instead of shame them.</p>
+        <p class="quiet">Layered as repos to services to stores to screens, so the scheduling engine can be property-tested on its own.</p>
+      </div>
+    </article>
+
+    <article class="item">
+      <div>
+        <span class="mark-bub" aria-hidden="true"></span>
+        <h3>A diary that stays yours</h3>
+        <p class="meta">Desktop, local-first</p>
+      </div>
+      <div>
+        <p>Notes live encrypted on your own machine, with Drive sync as an option rather than a requirement. Currently working out password recovery that doesn't quietly hand the keys back to me.</p>
+      </div>
+    </article>
+
+  </section>
+
+  <section class="close">
+    <h2>If you're building something that has to work on a cheap phone with no signal, we'll get along.</h2>
+    <p>Open to interesting problems, contract work, and arguments about whether entropy is really about ignorance. <a href="mailto:you@example.com">Say hello</a>.</p>
+  </section>
+
+  <footer class="foot">
+    <span>Varanasi, India</span>
+    <span><a href="https://github.com/rajatranjan">github.com/rajatranjan</a></span>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var EXAM = new Date(2027, 4, 2);            // 2 May 2027, approximate NEET date
+  var MS = 86400000;
+  var today = new Date(); today.setHours(0,0,0,0);
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var days = Math.max(0, Math.round((EXAM - today) / MS));
+  var grid = document.getElementById('grid');
+  var readout = document.getElementById('readout');
+
+  document.getElementById('count').textContent = days.toLocaleString('en-IN');
+
+  var fmt = new Intl.DateTimeFormat('en-IN', { weekday:'short', day:'numeric', month:'short', year:'numeric' });
+  var frag = document.createDocumentFragment();
+
+  for (var i = 0; i < days; i++) {
+    var d = new Date(today.getTime() + i * MS);
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'bub' + (i === 0 ? ' today' : (d.getDate() === 1 ? ' month' : ''));
+    b.dataset.label = fmt.format(d) + '  ·  ' + (i === 0 ? 'today' : i + ' days out');
+    b.setAttribute('aria-hidden', 'true');
+    b.tabIndex = -1;
+    if (!reduced) {
+      b.style.animation = 'bubIn .4s ease backwards';
+      b.style.animationDelay = Math.min(i * 1.1, 900) + 'ms';
+    }
+    frag.appendChild(b);
+  }
+  grid.appendChild(frag);
+
+  // one listener for the whole sheet
+  grid.addEventListener('pointerover', function (e) {
+    if (e.target.classList.contains('bub')) readout.textContent = e.target.dataset.label;
+  });
+  grid.addEventListener('pointerleave', function () {
+    readout.textContent = 'Point at a day.';
+    clear();
+  });
+
+  // ---- graphite dust: darken the bubbles the cursor sweeps past ----
+  var bubs = [], spots = [], lit = [], queued = false, px = 0, py = 0;
+  var RADIUS = 52;
+
+  function measure() {
+    bubs = Array.prototype.slice.call(grid.children);
+    spots = bubs.map(function (b) {
+      return { x: b.offsetLeft + b.offsetWidth / 2, y: b.offsetTop + b.offsetHeight / 2 };
+    });
+  }
+
+  function clear() {
+    for (var i = 0; i < lit.length; i++) {
+      lit[i].classList.remove('near');
+      lit[i].style.opacity = '';
+    }
+    lit = [];
+  }
+
+  function paint() {
+    queued = false;
+    clear();
+    for (var i = 0; i < spots.length; i++) {
+      var dx = spots[i].x - px, dy = spots[i].y - py;
+      if (dx > RADIUS || dx < -RADIUS || dy > RADIUS || dy < -RADIUS) continue;
+      var d = Math.sqrt(dx * dx + dy * dy);
+      if (d > RADIUS) continue;
+      var b = bubs[i];
+      b.classList.add('near');
+      b.style.opacity = (0.45 + 0.55 * (1 - d / RADIUS)).toFixed(2);
+      lit.push(b);
+    }
+  }
+
+  if (!reduced) {
+    measure();
+    window.addEventListener('resize', measure);
+    grid.addEventListener('pointermove', function (e) {
+      var r = grid.getBoundingClientRect();
+      px = e.clientX - r.left;
+      py = e.clientY - r.top;
+      if (!queued) { queued = true; requestAnimationFrame(paint); }
+    }, { passive: true });
+  }
+})();
+
+(function () {
+  var pencil = document.getElementById('pencil');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // top rule fills like a pencil line as you read down the page
+  if (pencil && !reduced) {
+    var ticking = false;
+    function draw() {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+      pencil.style.width = Math.min(100, Math.max(0, pct)) + '%';
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(draw); }
+    }, { passive: true });
+    window.addEventListener('resize', draw);
+    draw();
+  }
+
+  // each section gets marked once, when you reach it
+  var targets = document.querySelectorAll('.item, .close');
+  if (reduced || !('IntersectionObserver' in window)) {
+    targets.forEach(function (el) { el.classList.add('marked'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('marked');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -18% 0px', threshold: 0.15 });
+  targets.forEach(function (el) { io.observe(el); });
+})();
+</script>
+
+
 </body>
 </html>
